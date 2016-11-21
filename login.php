@@ -18,7 +18,8 @@ $(document).pngFix( );
 });
 </script>
 </head>
-<body id="login-bg">         
+<body id="login-bg">       
+<form action="login_verifica.php" method="post">    
 <!-- Start: login-holder -->
 <div id="login-holder">
 
@@ -38,12 +39,12 @@ $(document).pngFix( );
 	<div id="login-inner">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<th>Username</th>
-			<td><input type="text"  class="login-inp" /></td>
+			<th for="user">Usuário</th>
+			<td><input type="text" name="user" id="user" class="login-inp" /></td>                        
 		</tr>
 		<tr>
-			<th>Password</th>
-			<td><input type="password" value="************"  onfocus="this.value=''" class="login-inp" /></td>
+			<th for="password">Senha</th>
+			<td><input type="password" name="password" id="password" value="************"  onfocus="this.value=''" class="login-inp" /></td>   
 		</tr>
 		<tr>
 			<th></th>
@@ -51,7 +52,7 @@ $(document).pngFix( );
 		</tr>
 		<tr>
 			<th></th>
-			<td><input type="button" class="submit-login"  /></td>
+                        <td><input type="submit" class="submit-login"  /></td>
 		</tr>
 		</table>
 	</div>
@@ -85,5 +86,6 @@ $(document).pngFix( );
 
 </div>
 <!-- End: login-holder -->
+</form>
 </body>
 </html>

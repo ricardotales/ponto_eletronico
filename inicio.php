@@ -1,3 +1,8 @@
+<?php
+session_start();
+ require 'init.php';
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -210,7 +215,8 @@ $(document).ready(function() {
 </script>
 
 </head>
-<body> 
+<body>  
+    <?php if (isLoggedIn()): ?>            
     <div id="boxes">
 <!-- Janela Modal -->
     <div id="dialog2" class="window">
@@ -237,10 +243,9 @@ $(document).ready(function() {
 			<!--<div class="nav-divider">&nbsp;</div>
 			<div class="showhide-account"><img src="images/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
 			<div class="nav-divider">&nbsp;</div> -->
-			<a href="" id="logout"><img src="images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
-			<div class="clear">&nbsp;</div>
-		
-		</div> 
+                        <a href="logout.php" id="logout"><img src="images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
+			<div class="clear">&nbsp;</div>		
+		</div>               
 		<!-- end nav-right -->
 
 		<!--  start nav -->
@@ -300,11 +305,11 @@ $(document).ready(function() {
 				<li><a href="#nogo">Clients Details 3</a></li>
 			 
 			</ul>
-		</div>
+		</div>                       
 		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
 		</li>
-		</ul>
-			
+		</ul>  		                                                          
+
 		<div class="clear"></div>
 		</div>
 		<div class="clear"></div>
@@ -325,16 +330,21 @@ $(document).ready(function() {
 <div id="content">
 
 
-<div id="page-heading"><h1>Seja bem vindo ao Sistema de Ponto Eletrônico V 1.0.</h1></div>
+<div 
+    id="page-heading"><h1>Seja bem vindo ao Sistema de Ponto Eletrônico V 1.0.</h1>
+                <div id="">
+                    <?php?>                   		
+                    <b><p>Olá, <?php echo $_SESSION['user_name']; ?></p></b>  		
+		</div>      
+</div>
 
-
-<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<th rowspan="3" class="sized"><img src="images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
+	<th rowspan="3" class="sized"><img src="images/shared/side_shadowleft.jpg" width="20" height="280" alt="" /></th>
 	<th class="topleft"></th>
 	<td id="tbl-border-top">&nbsp;</td>
 	<th class="topright"></th>
-	<th rowspan="3" class="sized"><img src="images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
+	<th rowspan="3" class="sized"><img src="images/shared/side_shadowright.jpg" width="20" height="280" alt="" /></th>
 </tr>
 <tr>
 	<td id="tbl-border-left"></td>
@@ -375,20 +385,6 @@ $(document).ready(function() {
 </tr>
 </table>
 
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
 <div class="clear">&nbsp;</div>
 
 </div>
@@ -410,6 +406,8 @@ $(document).ready(function() {
 	<div class="clear">&nbsp;</div>
 </div>
 <!-- end footer -->
- 
+        <?php else: ?>
+            <p>Olá, visitante. <a href="login.php">Login</a></p>
+        <?php endif; ?> 
 </body>
 </html>

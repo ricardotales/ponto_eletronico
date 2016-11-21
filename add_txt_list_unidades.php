@@ -298,7 +298,23 @@ $(document).pngFix( );
             <div id="message-yellow">
 		<table border="0" width="100%" cellpadding="0" cellspacing="0">
                     <div id="scroll">
-                        <p>Presídio de Abaeté</p>                        
+<?php
+// Instancia o objeto PDO
+$pdo = new PDO("mysql:host=localhost;dbname=ponto_eletronico", "root", "");
+// define para que o PDO lance exceções caso ocorra erros
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+?>
+<?php
+// executa a instrução SQL
+$consulta = $pdo->query("SELECT * FROM unidades_prisionais;");
+?>   
+<?php
+while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+    // aqui eu mostro os valores de minha consulta
+    //echo "UNIDADE: {$linha['unidade']}<br />";
+    print "<a font href=\"" . $linha['unidade'] . "\">" . $linha['unidade'] . "</a> <br />";
+}
+?>                                                
                     </div>                    
 		</table>
             </div>
