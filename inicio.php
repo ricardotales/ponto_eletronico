@@ -215,8 +215,10 @@ $(document).ready(function() {
 </script>
 
 </head>
-<body>  
-    <?php if (isLoggedIn()): ?>            
+<body>       
+<?php
+    if ( isset($_SESSION['logged_in'])) {        
+?>
     <div id="boxes">
 <!-- Janela Modal -->
     <div id="dialog2" class="window">
@@ -406,8 +408,11 @@ $(document).ready(function() {
 	<div class="clear">&nbsp;</div>
 </div>
 <!-- end footer -->
-        <?php else: ?>
-            <p>Olá, visitante. <a href="login.php">Login</a></p>
-        <?php endif; ?> 
+    <?php } else { 
+            //exit ( include "login.php" );
+        echo "<script>
+            location.href='404.php';
+            </script>";
+    } ?> 
 </body>
 </html>

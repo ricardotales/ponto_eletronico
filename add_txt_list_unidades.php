@@ -1,7 +1,14 @@
+<?php
+session_start();
+ require 'init.php';
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
 <title>Ponto Eletrônico V 1.0</title>
 <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="default" />
 <!--[if IE]>
@@ -305,14 +312,18 @@ $pdo = new PDO("mysql:host=localhost;dbname=ponto_eletronico", "root", "");
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 <?php
+$teste =  $_SESSION['user_name'];
+echo $teste;
 // executa a instrução SQL
-$consulta = $pdo->query("SELECT * FROM unidades_prisionais;");
+//$consulta = $pdo->query("SELECT * FROM unidades_prisionais;");
+$consulta = $pdo->query("select A.unidade from unidades_prisionais A join users B on B.fk_id_unidades_prisionais = A.id where B.user = 'usuario2' ");
+
 ?>   
 <?php
 while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
-    // aqui eu mostro os valores de minha consulta
-    //echo "UNIDADE: {$linha['unidade']}<br />";
-    print "<a font href=\"" . $linha['unidade'] . "\">" . $linha['unidade'] . "</a> <br />";
+    // aqui eu mostro os valores de minha consulta 
+    echo "<span class='hx'><p align=justify><a href='#' <option value=".utf8_encode($linha['unidade']).">".utf8_encode($linha['unidade'])."</a></option></center></p>";
+    //print "<p align=center><a href=\"" . $linha['unidade'] . "\">" . $linha['unidade'] . "</a></center></p> <br />";
 }
 ?>                                                
                     </div>                    
