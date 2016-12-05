@@ -7,6 +7,7 @@ session_start();
     <head>
     <!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="refresh" content="6;URL=home.php" /> 
         <title>Ponto Eletrônico V 1.0</title>
         <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="default" />
         <!--[if IE]>
@@ -264,58 +265,15 @@ $('#d').trigger('change');
                                     <div id="message-yellow">
                                         <table border="0" width="100%" cellpadding="0" cellspacing="0">
                                             <div id="scroll">
-                                                <?php
-                                                // Instancia o objeto PDO
-                                                    $pdo = new PDO("mysql:host=localhost;dbname=ponto_eletronico", "root", "");
-                                                // define para que o PDO lance exceções caso ocorra erros
-                                                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                                //echo $_SESSION['user'];
-                                                    $consulta = $pdo->prepare("select A.unidade,B.user from unidades_prisionais A
-                                                    join users B on A.id = B.fk_id_unidades_prisionais
-                                                    where B.user = :usuario;");
-                                                    $consulta->bindParam(':usuario', $_SESSION['user'], PDO::PARAM_STR);
-                                                    $consulta->execute();
-                                                //$linha = $consulta->fetch(PDO::FETCH_ASSOC);
-
-                                                    while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) 
-                                                            {                   
-                                                                echo "<br><span class='hx'>"
-                                                                        . "     <p align=justify>"
-                                                                                    . " <a href='#abrirmodal' <option value=".utf8_encode($linha['unidade']).">".utf8_encode($linha['unidade'])."</a></option></center>"
-                                                                        . "     </p>";
-                                                            }
-                                                ?>                                           
+    
+<div class="loader">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>                                                 
                                             </div>      
-                                            <div id="abrirmodal" class="modal">
-                                                <div>
-                                                    <a href="#fechar" title="Fechar" class="fechar">x</a>
-                                                        <h2>Adicione o arquivo .TXT</h2>
-<?php
-    function Inserir($itens, Pdo $pdo){
-        $sts = $pdo->prepare("INSERT INTO importartxt(masp, date, hour_min_sec, tipo_reg3) VALUES(?,?,?,'{$_SESSION['user']}');");
-        $sts->bindValue(1, $itens[0], PDO::PARAM_STR);
-        $sts->bindValue(2, $itens[1], PDO::PARAM_STR);
-        $sts->bindValue(3, $itens[2], PDO::PARAM_STR);
-        $sts->execute();
-        $sts->closeCursor();
-        $sts = NULL;
-    }
-    if (!empty($_FILES['arquivo']))
-    {
-        $Pdo     = new PDO("mysql:host=localhost;dbname=ponto_eletronico", "root", "");
-        $file    = fopen($_FILES['arquivo']['tmp_name'], 'r');
-        while (!feof($file)){
-            $linha = fgets($file);      
-            $itens = array(trim(substr($linha, 24, 10)), trim(substr($linha, 35, 10)), trim(substr($linha, 46, 8)));
-            Inserir($itens, $Pdo);
-        }
-    }   
-?>
-    <form action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data" method="post">
-        <input type="file" name="arquivo" id="arquivo">
-        <input type="submit" name="enviar" value="Enviar">
-    </form>                                                     
-                                                </div>                                                
+                                                    
+                                                </div>                                                  
                                             </div>
                                         </table>
                                     </div>

@@ -219,18 +219,7 @@ $(document).ready(function() {
 <?php
     if ( isset($_SESSION['logged_in'])) {        
 ?>
-    <div id="boxes">
-<!-- Janela Modal -->
-    <div id="dialog2" class="window">
-    <!--<div align="right">
-            <input type="button" value="Fechar" class="close"/>
-	</div> -->
-            <img src="images/shared/aviso.png" width="800" height="500" /><br />
-    </div>
-<!-- Fim Janela Modal-->
-<!-- Máscara para cobrir a tela -->
-        <div id="mask"></div>
-    </div>
+
       	
 <div class="clear">&nbsp;</div>
  
@@ -258,8 +247,60 @@ $(document).ready(function() {
 
 		</li>
 		</ul>        
+                    
+		<div class="nav-divider">&nbsp;</div>                    
+		
+                <ul class="select"><li><a href="add_txt_list_unidades.php"><b>Adicionar .TXT</b><!--[if IE 7]><!--></a><!--<![endif]-->
 
+		</li>
+		</ul>
+		
+		<div class="nav-divider">&nbsp;</div>
+		                    
+		<ul class="select"><li><a href="#nogo"><b>Cadastrar/Editar</b><!--[if IE 7]><!--></a><!--<![endif]-->
+		<!--[if lte IE 6]><table><tr><td><![endif]-->
+		<div class="select_sub show">
+			<ul class="sub">
+				<li><a href="#nogo">Pessoas</a></li>
+				<li class="sub_show"><a href="#nogo">Add product</a></li>
+				<li><a href="#nogo">Delete products</a></li>
+			</ul>
 		</div>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+		</ul>
+		
+		<div class="nav-divider">&nbsp;</div>
+		
+		<ul class="select"><li><a href="#nogo"><b>Relatório</b><!--[if IE 7]><!--></a><!--<![endif]-->
+		<!--[if lte IE 6]><table><tr><td><![endif]-->
+		<div class="select_sub">
+			<ul class="sub">
+				<li><a href="#nogo">Categories Details 1</a></li>
+				<li><a href="#nogo">Categories Details 2</a></li>
+				<li><a href="#nogo">Categories Details 3</a></li>
+			</ul>
+		</div>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+		</ul>
+		
+		<div class="nav-divider">&nbsp;</div>
+		
+		<ul class="select"><li><a href="#nogo"><b>Folha de Ponto</b><!--[if IE 7]><!--></a><!--<![endif]-->
+		<!--[if lte IE 6]><table><tr><td><![endif]-->
+		<div class="select_sub">
+			<ul class="sub">
+				<li><a href="#nogo">Clients Details 1</a></li>
+				<li><a href="#nogo">Clients Details 2</a></li>
+				<li><a href="#nogo">Clients Details 3</a></li>
+			 
+			</ul>
+		</div>                       
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+		</ul>  		                                                          
+
 		<div class="clear"></div>
 		</div>
 		<div class="clear"></div>
@@ -281,7 +322,11 @@ $(document).ready(function() {
 
 
 <div 
-    id="page-heading"><h1>Seja bem vindo ao Sistema de Ponto Eletrônico V 1.0.</h1>    
+    id="page-heading"><h1>Seja bem vindo ao Sistema de Ponto Eletrônico V 1.0.</h1>
+                <div id="">
+                    <?php?>                   		
+                    <b><p>Olá, <?php echo $_SESSION['user_name']; ?></p></b>  		
+		</div>      
 </div>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
