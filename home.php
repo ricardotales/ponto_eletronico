@@ -276,9 +276,8 @@ $(document).ready(function() {
 		<!--[if lte IE 6]><table><tr><td><![endif]-->
 		<div class="select_sub">
 			<ul class="sub">
-				<li><a href="#nogo">Categories Details 1</a></li>
-				<li><a href="#nogo">Categories Details 2</a></li>
-				<li><a href="#nogo">Categories Details 3</a></li>
+                            <li><a href="user.php">Funcionários por Unidade</a></li>
+				<li><a href="#nogo">LOG's de Registro TXT</a></li>
 			</ul>
 		</div>
 		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
