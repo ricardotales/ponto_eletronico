@@ -213,7 +213,8 @@ $('#d').trigger('change');
                                 <div class="select_sub">
                                     <ul class="sub">
                                         <li><a href="user.php">Funcionários por Unidade</a></li>
-                                        <li><a href="#nogo">LOG's de Registro TXT</a></li>
+                                        <li><a href="log_file.php">LOG's de Registro TXT</a></li>
+                                        <li><a href="unidades_cadastradas.php">Unidades Cadastradas</a></li>                                          
                                     </ul>
                                 </div>
                             </li>
@@ -241,7 +242,7 @@ $('#d').trigger('change');
         <div class="clear"></div>
         <div id="content-outer">
         <div id="content">
-        <div id="page-heading"><h1>Selecione abaixo a sua unidade:</h1></div>
+        <div id="page-heading"><h1>Selecione abaixo a sua Unidade:</h1></div>
 
         <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
             <tr>
@@ -305,7 +306,7 @@ $('#d').trigger('change');
         $file    = fopen($_FILES['arquivo']['tmp_name'], 'r');
         while (!feof($file)){
             $linha = fgets($file);      
-            $itens = array(trim(substr($linha, 24, 10)), trim(substr($linha, 35, 10)), trim(substr($linha, 46, 8)));
+            $itens = array(trim(substr($linha, 26, 8)), trim(substr($linha, 35, 10)), trim(substr($linha, 46, 8)));
             Inserir($itens, $Pdo);
         }
     }   

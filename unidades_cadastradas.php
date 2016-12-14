@@ -16,21 +16,20 @@ session_start();
 	//multiplicamos a quantidade de registros da pagina pelo valor da pagina atual 
 	$inicio = $maximo * $inicio; 
 	//fazemos um select na tabela que iremos utilizar para saber quantos registros ela possui
-	$strCount = $pdo->select("SELECT COUNT(*) AS 'nome' FROM funcionarios");
+	$strCount = $pdo->select("SELECT COUNT(*) AS 'cidade' FROM unidades_prisionais");
 	//iniciamos uma var que será usada para armazenar a qtde de registros da tabela  
 	$total = 0;
 	if(count($strCount)){
 		foreach ($strCount as $row) {
 			//armazeno o total de registros da tabela para fazer a paginação
-			$total = $row["nome"]; 
+			$total = $row["cidade"]; 
 		}
 	} 
         	//guardo o resultado na variavel pra exibir os dados na pagina		
 	//$resultado = $pdo->select("SELECT * FROM funcionarios ORDER BY nome LIMIT $inicio,$maximo");
-	$resultado = $pdo->select("SELECT A.id, A.nome, A.masp, B.unidade FROM funcionarios A "
-                                  . "inner join unidades_prisionais B on A.fk_id_unidades_prisionais = B.id "
-                                  .  "ORDER BY nome ASC "
-                                  . "LIMIT $inicio,$maximo");      
+	$resultado = $pdo->select("SELECT * FROM unidades_prisionais "
+                                  .  "ORDER BY cidade ASC "  
+                                  . "LIMIT $inicio,$maximo");         
 ?>
 
 
@@ -170,7 +169,7 @@ session_start();
                                     <ul class="sub">
                                         <li><a href="user.php">Funcionários por Unidade</a></li>
                                         <li><a href="log_file.php">LOG's de Registro TXT</a></li>
-                                        <li><a href="unidades_cadastradas.php">Unidades Cadastradas</a></li>                                          
+                                        <li><a href="unidades_cadastradas.php">Unidades Cadastradas</a></li>                                        
                                     </ul>
                                 </div>
                             </li>
@@ -206,9 +205,9 @@ session_start();
 
 
 				<tr>
-					<th>MASP</th>
-					<th>NOME</th>
+					<th>ID</th>
 					<th>CIDADE</th>
+					<th>UNIDADE</th>
 				</tr>
 
 			
@@ -217,8 +216,8 @@ session_start();
 				if(count($resultado)){
 					foreach ($resultado as $res) {
 						echo "<tr>";
-						echo "	<td>".$res['masp']."</td>";                                                
-						echo "	<td>".$res['nome']."</td>";
+						echo "	<td>".$res['id']."</td>";                                                
+						echo "	<td>".$res['cidade']."</td>";
 						echo "	<td>".$res['unidade']."</td>";
 						echo "</tr>";
 

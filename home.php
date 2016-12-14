@@ -277,7 +277,8 @@ $(document).ready(function() {
 		<div class="select_sub">
 			<ul class="sub">
                             <li><a href="user.php">Funcionários por Unidade</a></li>
-				<li><a href="#nogo">LOG's de Registro TXT</a></li>
+                            <li><a href="log_file.php">LOG's de Registro TXT</a></li>
+                            <li><a href="unidades_cadastradas.php">Unidades Cadastradas</a></li>                              
 			</ul>
 		</div>
 		<!--[if lte IE 6]></td></tr></table></a><![endif]-->

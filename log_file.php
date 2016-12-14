@@ -1,39 +1,7 @@
 <?php
 session_start();
  require 'init.php';
-
-
-	require_once('class/Conexao.class.php');
-	//faz a conexão com o BD
-	$pdo = new Conexao(); 
-	//determina o numero de registros que serão mostrados na tela
-	$maximo = 20;
-	//pega o valor da pagina atual
-	$pagina = isset($_GET['pagina']) ? ($_GET['pagina']) : '1'; 
-	
-	//subtraimos 1, porque os registros sempre começam do 0 (zero), como num array
-	$inicio = $pagina - 1;
-	//multiplicamos a quantidade de registros da pagina pelo valor da pagina atual 
-	$inicio = $maximo * $inicio; 
-	//fazemos um select na tabela que iremos utilizar para saber quantos registros ela possui
-	$strCount = $pdo->select("SELECT COUNT(*) AS 'nome' FROM funcionarios");
-	//iniciamos uma var que será usada para armazenar a qtde de registros da tabela  
-	$total = 0;
-	if(count($strCount)){
-		foreach ($strCount as $row) {
-			//armazeno o total de registros da tabela para fazer a paginação
-			$total = $row["nome"]; 
-		}
-	} 
-        	//guardo o resultado na variavel pra exibir os dados na pagina		
-	//$resultado = $pdo->select("SELECT * FROM funcionarios ORDER BY nome LIMIT $inicio,$maximo");
-	$resultado = $pdo->select("SELECT A.id, A.nome, A.masp, B.unidade FROM funcionarios A "
-                                  . "inner join unidades_prisionais B on A.fk_id_unidades_prisionais = B.id "
-                                  .  "ORDER BY nome ASC "
-                                  . "LIMIT $inicio,$maximo");      
 ?>
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -41,7 +9,7 @@ session_start();
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Ponto Eletrônico V 1.0</title>
         <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="default" />
- 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />        
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />        
 	<style type="text/css">
 		#pesquisaServidor{
 			width:500px;
@@ -50,15 +18,159 @@ session_start();
 			margin-top:50px;
 		}
 	</style>        
+        <!--[if IE]>
+        <link rel="stylesheet" media="all" type="text/css" href="css/pro_dropline_ie.css" />
+        <![endif]-->
 
+        <!--  jquery core -->
         <script src="js/jquery/jquery-1.4.1.min.js" type="text/javascript"></script> 
 	<script src="" type="text/javascript"></script>        
         <!--  checkbox styling script -->
         <script src="js/jquery/ui.core.js" type="text/javascript"></script>
         <script src="js/jquery/ui.checkbox.js" type="text/javascript"></script>
         <script src="js/jquery/jquery.bind.js" type="text/javascript"></script>
+        <script type="text/javascript">
+                $(function(){
+                $('input').checkBox();
+                $('#toggle-all').click(function(){
+                $('#toggle-all').toggleClass('toggle-checked');
+                $('#mainform input[type=checkbox]').checkBox('toggle');
+                return false;
+                });
+            });
+        </script>  
+        <![if !IE 7]>
+        <!--  styled select box script version 1 -->
+        <script src="js/jquery/jquery.selectbox-0.5.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.styledselect').selectbox({ inputClass: "selectbox_styled" });
+            });
+        </script>
+        <!--  styled select box script version 2 --> 
+        <script src="js/jquery/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
+        <script type="text/javascript">
+                $(document).ready(function() {
+                $('.styledselect_form_1').selectbox({ inputClass: "styledselect_form_1" });
+                $('.styledselect_form_2').selectbox({ inputClass: "styledselect_form_2" });
+            });
+        </script>
+        <!--  styled select box script version 3 --> 
+        <script src="js/jquery/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
+        <script type="text/javascript">
+                $(document).ready(function() {
+                $('.styledselect_pages').selectbox({ inputClass: "styledselect_pages" });
+            });
+        </script>
+        <!--  styled file upload script --> 
+        <script src="js/jquery/jquery.filestyle.js" type="text/javascript"></script>
+        <script type="text/javascript" charset="utf-8">
+                $(function() {
+                $("input.file_1").filestyle({ 
+                image: "images/forms/upload_file.gif",
+                imageheight : 29,
+                imagewidth : 78,
+                width : 300
+                });
+            });
+        </script>
+        <!-- Custom jquery scripts -->
+        <script src="js/jquery/custom_jquery.js" type="text/javascript"></script> 
+        <!-- Tooltips -->
+        <script src="js/jquery/jquery.tooltip.js" type="text/javascript"></script>
+        <script src="js/jquery/jquery.dimensions.js" type="text/javascript"></script>
+        <script type="text/javascript">
+                $(function() {
+                    $('a.info-tooltip ').tooltip({
+                        track: true,
+                        delay: 0,
+                        fixPNG: true, 
+                        showURL: false,
+                        showBody: " - ",
+                        top: -35,
+                        left: 5
+                });
+            });
+        </script> 
+        <!--  date picker script -->
+        <link rel="stylesheet" href="css/datePicker.css" type="text/css" />
+        <script src="js/jquery/date.js" type="text/javascript"></script>
+        <script src="js/jquery/jquery.datePicker.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+        $(function()
+{
 
+// initialise the "Select date" link
+$('#date-pick')
+	.datePicker(
+		// associate the link with a date picker
+		{
+			createButton:false,
+			startDate:'01/01/2005',
+			endDate:'31/12/2020'
+		}
+	).bind(
+		// when the link is clicked display the date picker
+		'click',
+		function()
+		{
+			updateSelects($(this).dpGetSelected()[0]);
+			$(this).dpDisplay();
+			return false;
+		}
+	).bind(
+		// when a date is selected update the SELECTs
+		'dateSelected',
+		function(e, selectedDate, $td, state)
+		{
+			updateSelects(selectedDate);
+		}
+	).bind(
+		'dpClosed',
+		function(e, selected)
+		{
+			updateSelects(selected[0]);
+		}
+	);
+	
+var updateSelects = function (selectedDate)
+{
+	var selectedDate = new Date(selectedDate);
+	$('#d option[value=' + selectedDate.getDate() + ']').attr('selected', 'selected');
+	$('#m option[value=' + (selectedDate.getMonth()+1) + ']').attr('selected', 'selected');
+	$('#y option[value=' + (selectedDate.getFullYear()) + ']').attr('selected', 'selected');
+}
+// listen for when the selects are changed and update the picker
+$('#d, #m, #y')
+	.bind(
+		'change',
+		function()
+		{
+			var d = new Date(
+						$('#y').val(),
+						$('#m').val()-1,
+						$('#d').val()
+					);
+			$('#date-pick').dpSetSelected(d.asString());
+		}
+	);
 
+// default the position of the selects to today
+var today = new Date();
+updateSelects(today.getTime());
+
+// and update the datePicker to reflect it...
+$('#d').trigger('change');
+});
+</script>
+
+        <!-- MUST BE THE LAST SCRIPT IN <HEAD></HEAD></HEAD> png fix -->
+        <script src="js/jquery/jquery.pngFix.pack.js" type="text/javascript"></script>
+        <script type="text/javascript">
+                $(document).ready(function(){
+                $(document).pngFix( );
+            });
+        </script>
     </head>
 	<script type="text/javascript">
 	$(document).ready(function(){
@@ -96,7 +208,7 @@ session_start();
     }
     
     //Aqui eu chamo o metodo de load pela primeira vez sem parametros para pode exibir todos
-    load_dados(null, 'pesquisa.php', '#MostraPesq');
+    load_dados(null, 'pesquisa_2.php', '#MostraPesq');
     
     
     //Aqui uso o evento key up para come�ar a pesquisar, se valor for maior q 0 ele faz a pesquisa
@@ -109,10 +221,10 @@ session_start();
         
         if($parametro.length >= 1)
         {
-            load_dados(valores, 'pesquisa.php', '#MostraPesq');
+            load_dados(valores, 'pesquisa_2.php', '#MostraPesq');
         }else
         {
-            load_dados(null, 'pesquisa.php', '#MostraPesq');
+            load_dados(null, 'pesquisa_2.php', '#MostraPesq');
         }
     });
 
@@ -170,7 +282,7 @@ session_start();
                                     <ul class="sub">
                                         <li><a href="user.php">Funcionários por Unidade</a></li>
                                         <li><a href="log_file.php">LOG's de Registro TXT</a></li>
-                                        <li><a href="unidades_cadastradas.php">Unidades Cadastradas</a></li>                                          
+                                        <li><a href="unidades_cadastradas.php">Unidades Cadastradas</a></li>                                         
                                     </ul>
                                 </div>
                             </li>
@@ -198,91 +310,26 @@ session_start();
         <div class="clear"></div>
         <div id="content-outer">
         <div id="content">
-            <div id="page-heading"><h1><center>Funcionários por Unidade:</center></h1></div>
+            <div id="page-heading"><h1><center>Registro de Arquivos TXT's Adicionados Recentemente:</center></h1></div>
 	<center>
 		<article>
-
-                    	<table class="table table-hover">
-
-
-				<tr>
-					<th>MASP</th>
-					<th>NOME</th>
-					<th>CIDADE</th>
-				</tr>
-
-			
-			<?php
-				//se a tabela nao estiver vazia, percorremos linha por linha pegando os valores
-				if(count($resultado)){
-					foreach ($resultado as $res) {
-						echo "<tr>";
-						echo "	<td>".$res['masp']."</td>";                                                
-						echo "	<td>".$res['nome']."</td>";
-						echo "	<td>".$res['unidade']."</td>";
-						echo "</tr>";
-
-					}
-				}
-			?>
-                        </table>
+			<form name="form_pesquisa" id="form_pesquisa" method="post" action="">
+				<!--<fieldset>					
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-search"></i></span>
+							<input type="text" name="pesquisaServidor" id="pesquisaServidor" value="" tabindex="1" placeholder="Digite o Nome ou MASP do Servidor a Ser Localizado" />
+						</div>
+				</fieldset>  -->                          
+			</form>
+			<div id="contentLoading">
+				<div id="loading"></div>
+			</div>
+			<section class="jumbotron">
+				<div id="MostraPesq"></div>
+			</section>
 		</article>
 	</center>        
-		<div id="alignpaginacao">            
-<?php 
-			//determina de quantos em quantos links serão adicionados e removidos
-			$max_links = 6;
-			//dados para os botões
-			$previous = $pagina - 1; 
-			$next = $pagina + 1; 
-			//usa uma funcção "ceil" para arrendondar o numero pra cima, ex 1,01 será 2
-			$pgs = ceil($total / $maximo); 
-			//se a tabela não for vazia, adiciona os botões
-			if($pgs > 1 ){   
-				echo "<br/>"; 
-				//botao anterior
-				if($previous > 0){
-					echo "<div id='botaoanterior'><a href=".$_SERVER['PHP_SELF']."?pagina=$previous><input type='submit'  name='bt-enviar' id='bt-enviar' value='Anterior' class='button' /></a></div>";
-				} else{
-					echo "<div id='botaoanteriorDis'><a href=".$_SERVER['PHP_SELF']."?pagina=$previous><input type='submit'  name='bt-enviar' id='bt-enviar' value='Anterior' class='button' disabled='disabled'/></a></div>";
-				}	
-				
-				echo "<div id='numpaginacao'>";
-					for($i=$pagina-$max_links; $i <= $pgs-1; $i++) {
-						if ($i <= 0){
-						//enquanto for negativo, não faz nada
-						}else{
-							//senão adiciona os links para outra pagina
-							if($i != $pagina){
-								if($i == $pgs){ //se for o final da pagina, coloca tres pontinhos
-									echo "<a href=".$_SERVER['PHP_SELF']."?pagina=".($i).">$i</a> ..."; 
-								}else{
-									echo "<a href=".$_SERVER['PHP_SELF']."?pagina=".($i).">$i</a>"; 
-								}
-							} else{
-								if($i == $pgs){ //se for o final da pagina, coloca tres pontinhos
-									echo "<span class='current'> ".$i."</span> ..."; 
-								}else{
-									echo "<span class='current'> ".$i."</span>";
-								}
-							} 
-						}
-					}
-					
-				echo "</div>";
-				
-				//botao proximo
-				if($next <= $pgs){
-					echo " <div id='botaoprox'><a href=".$_SERVER['PHP_SELF']."?pagina=$next><input type='submit'  name='bt-enviar' id='bt-enviar' value='Proxima' class='button'/></a></div>";
-				}else{
-					echo " <div id='botaoproxDis'><a href=".$_SERVER['PHP_SELF']."?pagina=$next><input type='submit'  name='bt-enviar' id='bt-enviar' value='Proxima' class='button' disabled='disabled'/></a></div>";
-				}
-							
-			}
-?>   
-                        
-                    
-</div>
+
         <div class="clear">&nbsp;</div>
         </div>
         <div class="clear">&nbsp;</div>
